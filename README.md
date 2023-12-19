@@ -1,6 +1,6 @@
 # FISICA_CALC_PRO
 ### Descrição:
-Calculadora desenvolvida para executar operações que envolvem conteúdos de eletricidade e eletromagnetismo de Física III.
+Calculadora desenvolvida para executar operações que envolvem conteúdos de eletricidade e eletromagnetismo de Física III em linguagem C.
 ## Modo de execução:
 1- Navegue até o diretório onde está o arquivo main.c do projeto na sua máquina;
 
