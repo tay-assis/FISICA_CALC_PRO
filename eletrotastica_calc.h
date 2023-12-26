@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "lista.h"
 
 
 // CONSTANTES
@@ -13,26 +14,8 @@
 #define ELETROSTATICA 9.0e-9
 #define MOD_CARGA 1.602e-19
 
-//ESTRUTURA
-//Lista de forças
-struct forcas
-{
-    float forca;
-    struct forcas *prox;
-};
-typedef struct forcas Forcas;
-
-struct lista
-{
-    Forcas *inicio;
-};
-typedef struct lista Lista;
-
 
 //PROTÓTIPOS
-Lista *InicializaListaForca();
-Lista *InsereForcaLista(Lista *l, float valor);
-void DesalocarListaForca(Lista *l);
 void Inicializador();
 void MenuFisica();
 int VerificarMod();
@@ -43,37 +26,9 @@ float CalcForca(float q1, float q2, float d);
 float CalcDistancia(float f, float q1, float q2);
 float CalcCarga(float f, float q, float d, int resp);
 Lista *CalForcaResultante(Lista *l, float q1, float q2, float d);
-float SomaListaForca(Forcas *vet);
-void ImprimirListaForca(Forcas *list);
 //int verificar_resp(int resp);
 
 // IMPLEMENTAÇÕES
-// // Inializa a lista como nula
-Lista *InicializaListaForca(){
-    Lista *l = (Lista *)malloc(sizeof(Lista));
-    l->inicio = NULL;
-    return l;
-}
-
-// insere as forças na lista de forças
-Lista *InsereForcaLista(Lista *l, float valor){
-    Forcas *novo = (Forcas *)malloc(sizeof(Forcas));
-    novo->forca = valor;
-    novo->prox = l->inicio;
-    l->inicio = novo;
-    return l;
-}
-// Desaloca lista de forças
-void DesalocarListaForca(Lista *l){
-    Forcas *aux = l->inicio; 
-    while (aux != NULL){
-        Forcas *aux2 = aux->prox;
-        free(aux);
-        aux = aux2;
-    }
-    free(l);
-}
-
 void Inicializador(){
     system("cls");
     printf("CALCULADORA DE FISICA III\n");
@@ -158,7 +113,7 @@ void ModForcaEletrostatica(){
     resp = RespostaCalc();
     switch (resp){
         case 1:
-            if(VerificaForcaResultante() != 1){
+            if(!VerificaForcaResultante()){
                 if(!VerificaCarga()){
                     system("cls");
                     printf("Digite o valor da carga (C): ");
@@ -244,17 +199,6 @@ void ModForcaEletrostatica(){
     }
 }
 
-// soma o modulo das forças e retorna o valor da força resultante
-float SomaListaForca(Forcas *vet){
-    float soma = 0;
-    Forcas *aux = vet;
-    while(aux != NULL){
-        soma += aux->forca;
-        aux = aux->prox;
-    }
-    return soma;
-}
-
 // função que cria uma lista de forças enquanto o usuário desejar
 // o cálculo é feito com base no cálcula da força eletrostática entre duas cargas
 Lista *CalForcaResultante(Lista *l, float q1, float q2, float d){
@@ -280,14 +224,6 @@ Lista *CalForcaResultante(Lista *l, float q1, float q2, float d){
 
     }while(resp != 1);
     return aux;
-}
-
-void ImprimirListaForca(Forcas *list){
-    Forcas *aux = list;
-    while(aux != NULL){
-        printf("Forca: %.10f N\n", aux->forca);
-        aux = aux->prox;
-    }
 }
 
 #endif
