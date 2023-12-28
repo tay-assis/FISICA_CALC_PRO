@@ -1,5 +1,5 @@
 // BIBLIOTECAS
-#include "fisica_calc.h"
+#include "eletrostatica_calc.h"
 
 int main (){
     int r = 0;
