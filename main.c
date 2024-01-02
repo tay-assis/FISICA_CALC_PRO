@@ -12,7 +12,7 @@ int main (){
             ModForcaEletrostatica();
             break;
         case 2:
-            printf("Ainda nao desenvolvido\n");
+            VerificarQuantCarga();
             break;
         case 3:
             break;
