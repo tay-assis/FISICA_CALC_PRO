@@ -11,7 +11,7 @@
 // CONSTANTES
 #define PERM_VACUO 8.854e-12
 #define ELETROSTATICA 9.0e-9
-#define MOD_CARGA 1.602e-19
+#define CARG_ELEM 1.602e-19
 
 //PROTÓTIPOS
 void Inicializador();
@@ -28,6 +28,8 @@ float CalcCarga(float f, float q, float d, int resp);
 Lista *CalForcaResultante(Lista *l, float q1, float q2, float d);
 float SubtracaoForca(float f, float f2);
 // void *ExcluirForcas(Lista *l, Lista *sub);
+float CalcQuantCarga(float n_protons, float n_eletrons, float q);
+void VerificarQuantCarga();
 
 // IMPLEMENTAÇÕES
 // Função que imprime o nome do programa
@@ -299,6 +301,72 @@ float SubtracaoForca(float f, float f2){
     if(f > f2) valor = f - f2;
     else valor = f2 - f;
     return valor;
+}
+
+// Função que calcula a quantidade de carga elétrica e suas variáveis
+float CalcQuantCarga(float n_protons, float n_eletrons, float q){
+    float resp = 0;
+    if(n_eletrons == 0){
+        resp = (q/CARG_ELEM) - n_protons;
+        return resp;
+    }
+    else if(n_protons == 0){
+        resp =  (q/CARG_ELEM) + n_eletrons;
+        return resp;
+    }
+    else{
+        resp = (n_protons * CARG_ELEM) - (n_eletrons * CARG_ELEM);
+    }
+    return resp;
+}
+
+// Função que verifica se o usuário quer calcular a quantidade de carga elétrica e suas variáveis
+void VerificarQuantCarga(){
+    int resp = 0;
+    float n_protons = 0, n_eletrons = 0, q = 0;
+    system("cls"); // Limpa a tela
+    printf("Escolha a operacao que deseja fazer:\n");
+    printf("1-Calcular a quantidade de carga eletrica\n");
+    printf("2-Calcular o numero de protons ou carga do proton\n");
+    printf("3-Calcular o numero de eletrons ou carga do eletron\n");
+    printf("4-Voltar\n");
+    
+    
+    scanf("%d", &resp);
+    switch (resp){
+    case 1:
+        printf("Digite o numero de protons: \n");
+        scanf("%f", &n_protons);
+        printf("Digite o numero de eletrons: \n");
+        scanf("%f", &n_eletrons);
+        q = CalcQuantCarga(n_protons, n_eletrons, q);
+        printf("A quantidade de carga e: %.10f C\n", q);
+        system("pause"); // Pausa o programa
+        break;
+    case 2:
+        printf("Digite o numero de eletrons: \n");
+        scanf("%f", &n_eletrons);
+        printf("Digite o valor da carga: \n");
+        scanf("%f", &q);
+        n_protons = CalcQuantCarga(n_protons, n_eletrons, q);
+        printf("O numero de protons e: %.10f\n", n_protons);
+        system("pause"); // Pausa o programa
+        break;
+    case 3:
+        printf("Digite o numero de protons: \n");
+        scanf("%f", &n_protons);
+        printf("Digite o valor da carga: \n");
+        scanf("%f", &q);
+        n_eletrons = CalcQuantCarga(n_protons, n_eletrons, q);
+        printf("O numero de eletrons e: %.10f\n", n_eletrons);
+        system("pause"); // Pausa o programa
+        break;
+    case 4:
+        break;
+    default:
+        printf("Opcao invalida, tente novamente\n");
+        break;
+    }
 }
 
 #endif
