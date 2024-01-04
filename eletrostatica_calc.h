@@ -371,8 +371,121 @@ void VerificarQuantCarga(){
 }
 
 // Função principal que contém funções auxiliares para calcular a força eletrostática vetorial
+// Ainda nao implementado as funcoes de vetores
 void VetForcaEletrostatica(){
-    
+    float f = 0, f2 = 0, q1 = 0, q2 = 0, d = 0, valor = 0;
+    int resp = 0;
+    resp = RespostaCalc();
+    switch (resp){
+        case 1:
+            if(!VerificaCarga()){
+                system("cls"); // Limpa a tela
+                printf("Calculando a Forca Eletrostatica de uma Carga\n");
+                printf("Digite o valor da carga (C): ");
+                scanf("%f", &q1);
+                printf("Digite o valor da distancia (m): ");
+                scanf("%f", &d);
+                f = CalcForca(q1, q2, d);
+                printf("A forca eletrostatica e: %.10f N\n", f);
+                system("pause"); // Pausa o programa
+            }else{
+                if(!VerificaForcaResultante()){
+                    printf("Calculando a Força Eletrostatica entre duas Cargas\n");
+                        system("cls");
+                        printf("Digite o valor da carga 1 (C): ");
+                        scanf("%f", &q1);
+                        printf("Digite o valor da carga 2 (C): ");
+                        scanf("%f", &q2);
+                        printf("Digite o valor da distancia (m): ");
+                        scanf("%f", &d);
+                        f = CalcForca(q1, q2, d);
+                        printf("A forca eletrostatica e: %.10f N\n", f);
+                        system("pause"); // Pausa o programa
+                }else{
+                    Lista *l = InicializaListaForca();
+                    Lista *sub = InicializaListaForca();
+                        // Se o usuário desejar subtrair alguma força, chama a função que adiciona forças na lista de forças subtrativas
+                        if(VerificarSubtracaoForca()){
+                            int resp = 0;
+                            do{
+                                if(VerificarForcaSub()){
+                                    system("cls"); // Limpa a tela
+                                    printf("Calculando a Forca Eletrostatica a ser Subtraida\n");
+                                    sub = CalForcaResultante(sub, q1, q2, d);
+                                    f = SomaListaForca(sub->inicio);
+                                }else{
+                                    printf("Calculando a Forca Eletrostatica a ser Adicionada\n");
+                                    l = CalForcaResultante(l, q1, q2, d);
+                                    f2 = SomaListaForca(l->inicio);
+                                }
+                            printf("Deseja calcular mais forcas (1-Sim/2-Nao)?\n");
+                            scanf("%d", &resp);
+                            }while(resp == 1);    
+                            valor = SubtracaoForca(f, f2);
+                            printf("A forca eletrostatica resultante e: %.10f N\n", valor);
+                            system("pause"); // Pausa o programa
+                        // Se o usuário não desejar subtrair nenhuma força, apenas soma as forças
+                        }else{
+                            l = CalForcaResultante(l, q1, q2, d);
+                            f = SomaListaForca(l->inicio);
+                            printf("A forca eletrostatica resultante e: %.10f N\n", f);
+                            system("pause"); // Pausa o programa
+                        }
+                    DesalocarListaForca(l);
+                    DesalocarListaForca(sub);
+                }
+            }
+
+            break;
+        case 2:
+            printf("Digite o valor da forca (N): ");
+            scanf("%f", &f);
+            printf("Digite o valor da carga 2 (C): ");
+            scanf("%f", &q2);
+            printf("Digite o valor da distancia (m): ");
+            scanf("%f", &d);
+            q1 = CalcCarga(f, q2, d, resp);
+            printf("O valor da carga desejada e: %.10f C\n", q1);
+            system("pause"); // Pausa o programa
+
+            break;
+        case 3:
+            printf("Digite o valor da forca (N): ");
+            scanf("%f", &f);
+            printf("Digite o valor da distancia (m): ");
+            scanf("%f", &d);
+            q1 = CalcCarga(f, q2, d, resp);
+            printf("O valor da carga desejada e: %f C\n", q1);
+            system("pause"); // Pausa o programa
+
+            break;
+        case 4:
+            if(!VerificaCarga()){
+                printf("Digite o valor da forca (N): ");
+                scanf("%f", &f);
+                printf("Digite o valor da carga (C): ");
+                scanf("%f", &q1);
+                d = CalcDistancia(f, q1, q2);
+                printf("A distancia e: %f m\n", d);
+                system("pause"); // Pausa o programa
+            }else{
+                printf("Digite o valor da forca (N): ");
+                scanf("%f", &f);
+                printf("Digite o valor da carga 1 (C): ");
+                scanf("%f", &q1);
+                printf("Digite o valor da carga 2 (C): ");
+                scanf("%f", &q2);
+                d = CalcDistancia(f, q1, q2);
+                printf("A distancia e: %f m\n", d);
+                system("pause"); // Pausa o programa
+            }
+            break;
+        case 5:
+            break;
+        default:
+            printf("Opcao invalida!\n");
+            break;
+    }
 }
 
 #endif

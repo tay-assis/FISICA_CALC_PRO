@@ -9,8 +9,9 @@ int main (){
         scanf("%d", &r);
         switch (r){
         case 1:
-            if(VerificarMod()) ModForcaEletrostatica();
-            else VetForcaEletrostatica();
+            ModForcaEletrostatica();
+            // if(VerificarMod()) ModForcaEletrostatica();
+            // else VetForcaEletrostatica();
             break;
         case 2:
             VerificarQuantCarga();
