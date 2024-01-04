@@ -30,6 +30,7 @@ float SubtracaoForca(float f, float f2);
 // void *ExcluirForcas(Lista *l, Lista *sub);
 float CalcQuantCarga(float n_protons, float n_eletrons, float q);
 void VerificarQuantCarga();
+void VetForcaEletrostatica();
 
 // IMPLEMENTAÇÕES
 // Função que imprime o nome do programa
@@ -367,6 +368,11 @@ void VerificarQuantCarga(){
         printf("Opcao invalida, tente novamente\n");
         break;
     }
+}
+
+// Função principal que contém funções auxiliares para calcular a força eletrostática vetorial
+void VetForcaEletrostatica(){
+    
 }
 
 #endif

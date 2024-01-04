@@ -36,6 +36,10 @@ void RemoverForca(Lista *l, int posicao);
 // Inializa a lista como nula
 Lista *InicializaListaForca(){
     Lista *l = (Lista *)malloc(sizeof(Lista));
+    if(l == NULL){
+        printf("Erro ao alocar memoria\n");
+        exit(1);
+    }
     l->inicio = NULL;
     return l;
 }
@@ -43,6 +47,10 @@ Lista *InicializaListaForca(){
 // Insere as forças na lista de forças
 Lista *InsereForcaLista(Lista *l, float valor){
     Forcas *novo = (Forcas *)malloc(sizeof(Forcas));
+    if(novo == NULL){
+        printf("Erro ao alocar memoria\n");
+        exit(1);
+    }
     novo->forca = valor;
     novo->prox = l->inicio;
     l->inicio = novo;
